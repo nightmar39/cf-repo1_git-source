@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: EventSource
+metadata:
+  name: flask
+spec:
+  eventBusName: codefresh-eventbus
+  service:
+    ports:
+      - port: 80
+  template:
+    serviceAccountName: argo-server
+  github:
+    github-dfee4dcb-209c-423b-94d8-3f82eecd822d:
+      events:
+        - push
+      repositories:
+        - owner: nightmar39
+          names:
+            - flaskv3
+      webhook:
+        port: '80'
+        method: POST
+        endpoint: /webhooks/flask/github-dfee4dcb-209c-423b-94d8-3f82eecd822d
+        url: https://charizard.support.cf-cd.com
+      active: true
+      insecure: false
+      contentType: json
+      deleteHookOnFinish: true
+      apiToken:
+        name: autopilot-secret
+        key: git_token
