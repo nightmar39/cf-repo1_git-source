@@ -1,0 +1,62 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata: 
+  generateName: exercise-temp-one-
+spec:
+  entrypoint: dag-template
+  templates:
+    - name: task-a
+      script: 
+        image: python:3.8-slim 
+        command: [python]
+        source: print("Task A executed successfully with a script template")
+    - name: task-b
+      container: 
+        image: python:3.8-slim
+        command: [python]
+        source: print("Task B executed successfully using a container temaplate")
+    - name: task-c 
+      resource:
+        action: create
+        manifest: |
+          apiVersion: argoproj.io/v1alpha1
+          kind: Workflow
+          metadata:
+            name: wf-test
+          spec:
+            entrypoint: test-template
+            templates:
+            - name: test-template
+              script:
+                image: python:3.8-slim
+                command: [python]
+                source: |
+                  print("Workflow wf-test created with resource template.")
+    - name: task-d
+      suspend: 
+        duration: "5s"
+    - name: triple-b
+      steps:
+        - - name: b1
+            template: task-b
+        - - name: b2
+            template: task-b
+        - - name: b3
+            template: task-b
+    - name: dag-template
+      dag: 
+        tasks: 
+          - name: task1
+            template: task-a
+          - name: task2
+            template: triple-b
+            dependencies: [task1]
+          - name: task3
+            template: task-c
+            dependencies: [task1]
+          - name: task4
+            template: task-d
+            dependencies: [task2, task3]
+          - name: task5
+            template: task-a 
+            dependencies: [task4]
