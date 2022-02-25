@@ -110,4 +110,4 @@ spec:
             - dest: spec.arguments.parameters.10.value
               src:
                 dependencyName: github-dfee4dcb-209c-423b-94d8-3f82eecd822d
-                dataTemplate: docker-config-secret
+                dataTemplate: dockerhub-config-secret
