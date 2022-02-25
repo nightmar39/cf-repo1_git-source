@@ -65,7 +65,7 @@ spec:
                     - name: DOCKER_CONFIG_SECRET
                       value: ''
                 workflowTemplateRef:
-                  name: argo-hub.ci-simple.0.0.1
+                  name: exercise-temp-one
           parameters:
             - dest: spec.arguments.parameters.0.value
               src:
