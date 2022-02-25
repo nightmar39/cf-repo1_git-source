@@ -65,7 +65,7 @@ spec:
                     - name: DOCKER_CONFIG_SECRET
                       value: ''
                 workflowTemplateRef:
-                  name: exercise-temp-one
+                  name: ''
           parameters:
             - dest: spec.arguments.parameters.0.value
               src:
