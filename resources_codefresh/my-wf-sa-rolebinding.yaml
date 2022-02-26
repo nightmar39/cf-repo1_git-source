@@ -1,0 +1,21 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"rbac.authorization.k8s.io/v1","kind":"RoleBinding","metadata":{"annotations":{},"creationTimestamp":null,"labels":{"app.kubernetes.io/instance":"codefresh-workflow-reporter"},"name":"codefresh-sa","namespace":"codefresh"},"roleRef":{"apiGroup":"","kind":"Role","name":"codefresh-sa"},"subjects":[{"kind":"ServiceAccount","name":"codefresh-sa","namespace":"codefresh"}]}
+  creationTimestamp: "2022-02-24T09:27:19Z"
+  labels:
+    app.kubernetes.io/instance: codefresh-workflow-reporter
+  name: my-wf-sa
+  namespace: codefresh
+  resourceVersion: "55537829"
+  uid: 4c0015f3-8178-43f3-b298-d076402cb2c0
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: codefresh-sa
+subjects:
+- kind: ServiceAccount
+  name: my-wf-sa
+  namespace: codefresh
