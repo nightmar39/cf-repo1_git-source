@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  creationTimestamp: "2022-02-26T00:42:18Z"
+  name: my-wf-sa
+  namespace: codefresh
+  resourceVersion: "56838739"
+  uid: 13a480ab-64e5-4889-b298-56de43d30d51
+secrets:
+- name: my-wf-sa-token-vd7hk
