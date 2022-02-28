@@ -3,6 +3,7 @@ kind: WorkflowTemplate
 metadata: 
   name: exercise-temp-one
 spec:
+  archiveLogs: true
   entrypoint: dag-template
   templates:
     - name: task-a
