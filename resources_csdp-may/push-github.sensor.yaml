@@ -1,0 +1,50 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Sensor
+metadata:
+  name: push-github
+spec:
+  dependencies:
+  - eventName: github-push-heads
+    eventSourceName: push-github
+    filters:
+      data:
+      - path: body.X-GitHub-Event
+        type: string
+        value:
+        - push
+      - path: body.ref
+        template: '{{ (split "/" .Input)._1 }}'
+        type: string
+        value:
+        - heads
+    name: github-push-heads
+  eventBusName: codefresh-eventbus
+  template:
+    container:
+      name: ""
+      resources: {}
+    serviceAccountName: argo
+  triggers:
+  - retryStrategy:
+      steps: 3
+    template:
+      argoWorkflow:
+        operation: submit
+        parameters:
+        - dest: spec.arguments.parameters.0.value
+          src:
+            dataKey: body.ref
+            dependencyName: github-push-heads
+        source:
+          resource:
+            apiVersion: argoproj.io/v1alpha1
+            kind: Workflow
+            metadata:
+              generateName: hello-world-
+            spec:
+              arguments:
+                parameters:
+                - name: message
+              workflowTemplateRef:
+                name: hello-world
+      name: hello-world

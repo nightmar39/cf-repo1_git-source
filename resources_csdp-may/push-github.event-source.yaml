@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: EventSource
+metadata:
+  name: push-github
+spec:
+  eventBusName: codefresh-eventbus
+  github:
+    github-push-heads:
+      active: true
+      apiToken:
+        key: git_token
+        name: autopilot-secret
+      contentType: json
+      events:
+      - push
+      insecure: true
+      repositories:
+      - names:
+        - cf-repo1_git-source
+        owner: nightmar39
+      webhook:
+        endpoint: /webhooks/csdp-may/push-github/github-push-heads
+        method: POST
+        port: "80"
+        url: https://charizard-csdp.support.cf-cd.com
+  service:
+    ports:
+    - port: 80
+  template:
+    container:
+      name: ""
+      resources: {}
